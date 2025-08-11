@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.controls {
+    margin-bottom: 10px;
+}
+
+#sets {
+    margin-top: 20px;
+    white-space: pre;
+    background: #f5f5f5;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
