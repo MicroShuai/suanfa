@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图结构可视化演示</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="css/graph-demo.css">
+</head>
+<body>
+    <div class="page-container">
+        <div class="left-menu">
+            <h3>选择图类型</h3>
+            <ul class="algorithm-list" id="graphTypeList">
+                <li class="algorithm-item active" data-type="undirected">
+                    <div class="name">无向图</div>
+                </li>
+                <li class="algorithm-item" data-type="directed">
+                    <div class="name">有向图</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-container">
+            <h1>图结构可视化演示</h1>
+            <div id="chart"></div>
+            <div class="description" id="description">当前演示：无向图</div>
+        </div>
+    </div>
+
+    <script src="js/graph-demo.js"></script>
+</body>
+</html>
