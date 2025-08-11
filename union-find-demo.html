@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>并查集演示</title>
+    <link rel="stylesheet" href="css/union-find-demo.css">
+</head>
+<body>
+    <h2>并查集（路径压缩）演示</h2>
+    <div class="controls">
+        <div>
+            <label>合并:</label>
+            <input id="unionA" type="number" min="0" max="9"> -
+            <input id="unionB" type="number" min="0" max="9">
+            <button id="unionBtn">Union</button>
+        </div>
+        <div>
+            <label>查询根:</label>
+            <input id="findX" type="number" min="0" max="9">
+            <button id="findBtn">Find</button>
+        </div>
+    </div>
+    <div id="sets"></div>
+    <script src="js/union-find-demo.js"></script>
+</body>
+</html>
