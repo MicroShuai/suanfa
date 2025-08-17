@@ -168,6 +168,27 @@ const algorithmsInfo = {
             sorted: { color: '#4caf50', name: '局部有序' },
             unsorted: { color: '#2196f3', name: '待处理的元素' }
         }
+    },
+    radixSort: {
+        name: '基数排序',
+        timeComplexity: 'O(d(n + k))',
+        stability: '稳定',
+        stabilityReason: '按位分配到桶中，桶内保持原有顺序，相等元素的相对位置不会改变',
+        advantages: '线性时间，适用于大量数字',
+        disadvantages: '需要额外空间，适用范围有限',
+        coreIdea: '按位分配',
+        description: '从最低位开始，将数字按位分配到桶中，再依次收集，逐位处理直到最高位',
+        steps: [
+            '确定最大值的位数',
+            '从最低位开始，按当前位将元素分配到 0-9 号桶',
+            '按桶编号依次收集元素形成新的序列',
+            '重复步骤直至最高位处理完毕'
+        ],
+        colors: {
+            current: { color: '#f44336', name: '当前处理的元素' },
+            sorted: { color: '#4caf50', name: '已排序的元素' },
+            unsorted: { color: '#2196f3', name: '未排序的元素' }
+        }
     }
 };
 
@@ -639,7 +660,38 @@ class SortVisualizer {
             gap = Math.floor(gap / 2);
         }
     }
-    
+
+    radixSort(arr) {
+        const max = Math.max(...arr);
+        let exp = 1;
+        let pass = 1;
+        while (Math.floor(max / exp) > 0) {
+            const buckets = Array.from({ length: 10 }, () => []);
+            for (let i = 0; i < arr.length; i++) {
+                const digit = Math.floor(arr[i] / exp) % 10;
+                buckets[digit].push(arr[i]);
+                this.steps.push({
+                    array: [...arr],
+                    action: `第${pass}轮：处理元素 ${arr[i]} 的当前位 ${digit}`,
+                    highlights: { current: i }
+                });
+            }
+            let index = 0;
+            for (let b = 0; b < 10; b++) {
+                while (buckets[b].length > 0) {
+                    arr[index++] = buckets[b].shift();
+                }
+            }
+            this.steps.push({
+                array: [...arr],
+                action: `第${pass}轮按位排序结果`,
+                highlights: {}
+            });
+            exp *= 10;
+            pass++;
+        }
+    }
+
     getGroupIndices(index, gap, n) {
         const group = [];
         const start = index % gap;
@@ -702,6 +754,10 @@ class SortVisualizer {
                 if (highlights.comparing && highlights.comparing.includes(index)) return info.colors.comparing.color;
                 if (highlights.group && highlights.group.includes(index)) return info.colors.group.color;
                 return info.colors.unsorted.color;
+            } else if (this.currentAlgorithm === 'radixSort') {
+                if (highlights.sorted && highlights.sorted.includes(index)) return info.colors.sorted.color;
+                if (index === highlights.current) return info.colors.current.color;
+                return info.colors.unsorted.color;
             }
             
             return '#2196f3';
@@ -759,6 +815,8 @@ class SortVisualizer {
             this.heapSort([...this.array]);
         } else if (this.currentAlgorithm === 'shellSort') {
             this.shellSort([...this.array]);
+        } else if (this.currentAlgorithm === 'radixSort') {
+            this.radixSort([...this.array]);
         }
         
         // 添加完成步骤
